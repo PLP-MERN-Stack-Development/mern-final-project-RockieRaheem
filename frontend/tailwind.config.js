@@ -18,6 +18,11 @@ export default {
         "border-dark": "#364853",
         "surface-light": "#f0f3f4",
         "surface-dark": "#2a3b45",
+        success: "#22c55e",
+        warning: "#f59e0b",
+        danger: "#ef4444",
+        info: "#3b82f6",
+        verified: "#8b5cf6",
       },
       fontFamily: {
         sans: ["Inter", "sans-serif"],

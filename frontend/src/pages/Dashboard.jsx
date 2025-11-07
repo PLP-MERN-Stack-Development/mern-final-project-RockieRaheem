@@ -78,7 +78,7 @@ const Dashboard = () => {
               </p>
             </Link>
             <Link
-              to="/ask-question"
+              to="/my-questions"
               className="flex items-center gap-3 px-3 py-2.5 text-text-light-secondary dark:text-text-dark-secondary hover:bg-surface-light dark:hover:bg-surface-dark rounded-lg"
             >
               <span className="material-symbols-outlined">help_outline</span>

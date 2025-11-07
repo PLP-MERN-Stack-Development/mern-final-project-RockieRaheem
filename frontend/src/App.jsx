@@ -5,6 +5,7 @@ import AuthPage from "./pages/AuthPage";
 import Dashboard from "./pages/Dashboard";
 import AskQuestion from "./pages/AskQuestion";
 import QuestionDetail from "./pages/QuestionDetail";
+import MyQuestions from "./pages/MyQuestions";
 import Sessions from "./pages/Sessions";
 import LiveSession from "./pages/LiveSession";
 import ResourceLibrary from "./pages/ResourceLibrary";
@@ -45,6 +46,14 @@ function AppRoutes() {
           element={
             <PrivateRoute>
               <AskQuestion />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/my-questions"
+          element={
+            <PrivateRoute>
+              <MyQuestions />
             </PrivateRoute>
           }
         />
