@@ -53,12 +53,14 @@
 ## ✨ Features
 
 ### 🔐 Authentication & User Management
+
 - [x] JWT-based secure authentication
 - [x] Role-based access control (Student, Teacher, Admin)
 - [x] User profiles with school and district information
 - [x] Reputation and strike tracking system
 
 ### ❓ Question & Answer System
+
 - [x] Post questions with attachments
 - [x] Anonymous question option for sensitive topics
 - [x] Subject and education level categorization
@@ -67,6 +69,7 @@
 - [x] Accepted answer marking
 
 ### 📖 Live Study Sessions
+
 - [x] Schedule and host study sessions
 - [x] Real-time participant management
 - [x] Subject-specific sessions
@@ -74,6 +77,7 @@
 - [x] Teacher-led and peer-led sessions
 
 ### 🤖 AI Chatbot (EduBot)
+
 - [x] 24/7 educational assistance
 - [x] Subject-specific help
 - [x] Step-by-step explanations
@@ -81,6 +85,7 @@
 - [x] Safe, age-appropriate responses
 
 ### 🛡️ Safety & Moderation
+
 - [x] Content filtering for inappropriate material
 - [x] Report/flag system for users and content
 - [x] 3-strike rule with automatic banning
@@ -88,6 +93,7 @@
 - [x] Chat logging for accountability
 
 ### 🔔 Real-time Features (Socket.IO)
+
 - [x] Live notifications for new answers
 - [x] Real-time session updates
 - [x] Instant messaging in study sessions
@@ -99,19 +105,20 @@
 
 ### 🖼️ Screenshots
 
-*Coming Soon: Add screenshots of your application*
+_Coming Soon: Add screenshots of your application_
 
 ### 🎥 Video Demonstration
 
 **[Watch the Full Demo Video](https://your-video-link-here)**  
-*5-10 minute walkthrough of all major features*
+_5-10 minute walkthrough of all major features_
 
 ### 🌐 Live Application
 
-**Frontend**: [https://edulink-ug.vercel.app](https://edulink-ug.vercel.app) *(Deployment pending)*  
-**API**: [https://edulink-ug-api.onrender.com](https://edulink-ug-api.onrender.com) *(Deployment pending)*
+**Frontend**: [https://edulink-ug.vercel.app](https://edulink-ug.vercel.app) _(Deployment pending)_  
+**API**: [https://edulink-ug-api.onrender.com](https://edulink-ug-api.onrender.com) _(Deployment pending)_
 
 **Test Credentials**:
+
 ```
 Student Account:
 Email: student@test.com
@@ -127,6 +134,7 @@ Password: test123
 ## 🛠️ Tech Stack
 
 ### Frontend
+
 ![React](https://img.shields.io/badge/React-19.1-blue?logo=react)
 ![Vite](https://img.shields.io/badge/Vite-7.1-purple?logo=vite)
 ![Tailwind](https://img.shields.io/badge/Tailwind-3.4-cyan?logo=tailwindcss)
@@ -141,6 +149,7 @@ Password: test123
 - **Socket.io-client 4.8.1** - Real-time communication
 
 ### Backend
+
 ![Node.js](https://img.shields.io/badge/Node.js-22.x-green?logo=node.js)
 ![Express](https://img.shields.io/badge/Express-4.18-lightgrey?logo=express)
 ![MongoDB](https://img.shields.io/badge/MongoDB-7.0-green?logo=mongodb)
@@ -156,6 +165,7 @@ Password: test123
 - **Multer 1.4.5** - File upload handling
 
 ### Security & Utilities
+
 - **bcryptjs** - Password hashing
 - **Helmet** - Security headers
 - **CORS** - Cross-origin resource sharing
@@ -356,6 +366,7 @@ Frontend will run on: **http://localhost:5173**
 #### 4. Access the Application
 
 Open your browser and navigate to:
+
 - **Frontend**: http://localhost:5173
 - **Backend API**: http://localhost:5001
 - **API Health Check**: http://localhost:5001/api/health
@@ -363,6 +374,7 @@ Open your browser and navigate to:
 ### 🎉 You're Ready!
 
 You can now:
+
 1. Register a new student account
 2. Register a teacher account (set role to "teacher")
 3. Start asking questions
@@ -391,21 +403,21 @@ Authorization: Bearer <your_jwt_token>
 
 ### Endpoints Overview
 
-| Endpoint | Method | Description | Auth |
-|----------|--------|-------------|------|
-| `/api/auth/register` | POST | Register new user | No |
-| `/api/auth/login` | POST | User login | No |
-| `/api/auth/me` | GET | Get current user | Yes |
-| `/api/questions` | GET | List all questions | No |
-| `/api/questions` | POST | Create question | Yes |
-| `/api/questions/:id` | GET | Get question details | No |
-| `/api/questions/:id/upvote` | PUT | Upvote question | Yes |
-| `/api/answers` | POST | Submit answer | Yes |
-| `/api/answers/:id/verify` | PUT | Verify answer | Yes (Teacher) |
-| `/api/sessions` | GET | List sessions | Yes |
-| `/api/sessions` | POST | Create session | Yes (Teacher) |
-| `/api/reports` | POST | Report content/user | Yes |
-| `/api/chatbot` | POST | Chat with AI | Yes |
+| Endpoint                    | Method | Description          | Auth          |
+| --------------------------- | ------ | -------------------- | ------------- |
+| `/api/auth/register`        | POST   | Register new user    | No            |
+| `/api/auth/login`           | POST   | User login           | No            |
+| `/api/auth/me`              | GET    | Get current user     | Yes           |
+| `/api/questions`            | GET    | List all questions   | No            |
+| `/api/questions`            | POST   | Create question      | Yes           |
+| `/api/questions/:id`        | GET    | Get question details | No            |
+| `/api/questions/:id/upvote` | PUT    | Upvote question      | Yes           |
+| `/api/answers`              | POST   | Submit answer        | Yes           |
+| `/api/answers/:id/verify`   | PUT    | Verify answer        | Yes (Teacher) |
+| `/api/sessions`             | GET    | List sessions        | Yes           |
+| `/api/sessions`             | POST   | Create session       | Yes (Teacher) |
+| `/api/reports`              | POST   | Report content/user  | Yes           |
+| `/api/chatbot`              | POST   | Chat with AI         | Yes           |
 
 For detailed API documentation with examples, see [docs/API_TESTING.md](docs/API_TESTING.md)
 
@@ -442,6 +454,7 @@ npm test
 ```
 
 ### Test Coverage Goals
+
 - [ ] Unit tests for all controllers (80%+ coverage)
 - [ ] Integration tests for API endpoints
 - [ ] Component tests for React components
@@ -570,4 +583,4 @@ If you find EduLink UG helpful, please give it a ⭐ on GitHub!
 
 **Built with ❤️ for Quality Education in Uganda (SDG 4)**
 
-*For God and My Country* 🇺🇬 
+_For God and My Country_ 🇺🇬
