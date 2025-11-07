@@ -5,6 +5,7 @@ Get EduLink UG running on your local machine in 5 minutes!
 ## ⚡ Prerequisites
 
 Make sure you have:
+
 - ✅ Node.js (v22+) installed - [Download](https://nodejs.org/)
 - ✅ MongoDB (v7+) running - [Download](https://www.mongodb.com/try/download/community)
 - ✅ Git installed - [Download](https://git-scm.com/)
@@ -39,11 +40,13 @@ cp .env.example .env
 ```
 
 **Quick .env setup** (edit with nano or any editor):
+
 ```bash
 nano .env
 ```
 
 **Minimal required configuration**:
+
 ```env
 NODE_ENV=development
 PORT=5001
@@ -53,6 +56,7 @@ CLIENT_URL=http://localhost:5173
 ```
 
 **Start backend**:
+
 ```bash
 npm run dev
 ```
@@ -76,12 +80,14 @@ cp .env.example .env
 ```
 
 **Quick .env setup**:
+
 ```env
 VITE_API_URL=http://localhost:5001
 VITE_SOCKET_URL=http://localhost:5001
 ```
 
 **Start frontend**:
+
 ```bash
 npm run dev
 ```
@@ -110,6 +116,7 @@ net start MongoDB
 ### Step 5: Access the Application
 
 Open your browser and go to:
+
 - **Frontend**: http://localhost:5173
 - **Backend API**: http://localhost:5001
 - **Health Check**: http://localhost:5001/api/health
@@ -121,12 +128,14 @@ Open your browser and go to:
 ### 1. Create Test Accounts
 
 **Register a Student**:
+
 - Go to http://localhost:5173
 - Click "Sign Up"
 - Fill in the form (use any school name)
 - Click "Create Account"
 
 **Register a Teacher**:
+
 - Click "Sign Up" again
 - Fill in the form
 - **Important**: Set role to "teacher"
@@ -135,6 +144,7 @@ Open your browser and go to:
 ### 2. Test the Features
 
 **As a Student**:
+
 1. ✅ Post a question
 2. ✅ Browse questions
 3. ✅ Answer a question
@@ -142,6 +152,7 @@ Open your browser and go to:
 5. ✅ Join a study session
 
 **As a Teacher**:
+
 1. ✅ Create a study session
 2. ✅ Verify student answers
 3. ✅ Moderate content
@@ -168,6 +179,7 @@ curl -X POST http://localhost:5001/api/auth/login \
 ### Issue 1: "Cannot connect to MongoDB"
 
 **Solution**:
+
 ```bash
 # Check if MongoDB is running
 pgrep -x mongod
@@ -180,6 +192,7 @@ brew services start mongodb-community  # macOS
 ### Issue 2: "Port 5001 already in use"
 
 **Solution**:
+
 ```bash
 # Find and kill the process
 lsof -ti:5001 | xargs kill -9
@@ -191,6 +204,7 @@ PORT=5002
 ### Issue 3: "npm install fails"
 
 **Solution**:
+
 ```bash
 # Clear npm cache
 npm cache clean --force
@@ -203,6 +217,7 @@ npm install
 ### Issue 4: "Module not found" errors
 
 **Solution**:
+
 ```bash
 # Make sure you're in the correct directory
 pwd
@@ -214,6 +229,7 @@ npm install
 ### Issue 5: Frontend won't connect to backend
 
 **Solution**:
+
 ```bash
 # Check frontend/.env
 cat frontend/.env
@@ -232,16 +248,19 @@ npm run dev
 After getting it running:
 
 1. **Read the Documentation**:
+
    - `README.md` - Complete guide
    - `docs/USER_GUIDE.md` - How to use features
    - `docs/API_TESTING.md` - API endpoints
 
 2. **Explore the Code**:
+
    - `backend/` - API implementation
    - `frontend/src/` - React components
    - `docs/ARCHITECTURE.md` - System design
 
 3. **Run Tests** (when implemented):
+
    ```bash
    cd backend && npm test
    cd frontend && npm test
@@ -278,4 +297,4 @@ Before starting development, make sure:
 
 **You're all set! Happy coding!** 🎉
 
-*For God and My Country* 🇺🇬
+_For God and My Country_ 🇺🇬

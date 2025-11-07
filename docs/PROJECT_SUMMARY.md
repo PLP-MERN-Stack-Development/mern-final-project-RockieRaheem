@@ -12,7 +12,7 @@
 **EduLink UG** is a comprehensive peer-learning platform designed for Ugandan secondary school students. The platform enables collaborative learning through Q&A, live study sessions, and AI-powered tutoring, aligned with Uganda's O-Level and A-Level curriculum.
 
 **Mission**: Provide quality education to all Ugandan students (SDG 4)  
-**Tagline**: *For God and My Country* 🇺🇬
+**Tagline**: _For God and My Country_ 🇺🇬
 
 ---
 
@@ -38,6 +38,7 @@
 - [x] **API Testing**: Comprehensive tests documented
 
 **Backend Structure**:
+
 ```
 backend/
 ├── config/         # DB connection
@@ -61,6 +62,7 @@ backend/
 - [x] **Real-time Updates**: Socket.IO client integration
 
 **Frontend Structure**:
+
 ```
 frontend/
 ├── src/
@@ -114,6 +116,7 @@ frontend/
 ## 🎨 Key Features Implemented
 
 ### 1. Authentication & User Management
+
 - User registration and login
 - JWT token-based authentication
 - Role-based access control (Student, Teacher, Admin)
@@ -121,6 +124,7 @@ frontend/
 - Password encryption with bcryptjs
 
 ### 2. Question & Answer System
+
 - Post questions with subject categorization
 - Anonymous question option
 - Rich text support with attachments
@@ -130,6 +134,7 @@ frontend/
 - Subject and education level filtering
 
 ### 3. Live Study Sessions
+
 - Schedule and host study sessions
 - Real-time participant management
 - Subject-specific sessions
@@ -138,6 +143,7 @@ frontend/
 - Participant limit controls
 
 ### 4. AI Chatbot (EduBot)
+
 - 24/7 educational assistance
 - OpenAI GPT integration
 - Subject-specific help
@@ -145,6 +151,7 @@ frontend/
 - Safe, age-appropriate responses
 
 ### 5. Safety & Moderation
+
 - Content filtering middleware
 - Report/flag system
 - 3-strike rule with automatic banning
@@ -152,6 +159,7 @@ frontend/
 - Admin oversight capabilities
 
 ### 6. Real-time Features
+
 - Socket.IO integration
 - Live notifications
 - Real-time session updates
@@ -162,28 +170,31 @@ frontend/
 ## 🛠️ Technology Stack
 
 ### Frontend
-| Technology | Version | Purpose |
-|------------|---------|---------|
-| React | 19.1.1 | UI library |
-| Vite | 7.1.7 | Build tool |
-| Tailwind CSS | 3.4.1 | Styling |
-| React Router | 7.9.4 | Routing |
-| Axios | 1.13.0 | HTTP client |
-| Socket.io-client | 4.8.1 | Real-time |
+
+| Technology       | Version | Purpose     |
+| ---------------- | ------- | ----------- |
+| React            | 19.1.1  | UI library  |
+| Vite             | 7.1.7   | Build tool  |
+| Tailwind CSS     | 3.4.1   | Styling     |
+| React Router     | 7.9.4   | Routing     |
+| Axios            | 1.13.0  | HTTP client |
+| Socket.io-client | 4.8.1   | Real-time   |
 
 ### Backend
-| Technology | Version | Purpose |
-|------------|---------|---------|
-| Node.js | 22.x | Runtime |
-| Express.js | 4.18.2 | Web framework |
-| MongoDB | 7.0.25 | Database |
-| Mongoose | 8.0.3 | ODM |
-| JWT | 9.0.2 | Authentication |
-| Socket.IO | 4.6.1 | WebSockets |
-| OpenAI | 4.24.1 | AI chatbot |
-| Multer | 1.4.5 | File uploads |
+
+| Technology | Version | Purpose        |
+| ---------- | ------- | -------------- |
+| Node.js    | 22.x    | Runtime        |
+| Express.js | 4.18.2  | Web framework  |
+| MongoDB    | 7.0.25  | Database       |
+| Mongoose   | 8.0.3   | ODM            |
+| JWT        | 9.0.2   | Authentication |
+| Socket.IO  | 4.6.1   | WebSockets     |
+| OpenAI     | 4.24.1  | AI chatbot     |
+| Multer     | 1.4.5   | File uploads   |
 
 ### Security & Utilities
+
 - bcryptjs - Password hashing
 - Helmet - Security headers
 - CORS - Cross-origin resource sharing
@@ -205,6 +216,7 @@ frontend/
 6. **Chats** - AI chatbot conversation history
 
 ### Relationships
+
 - Users → Questions (One-to-Many)
 - Users → Answers (One-to-Many)
 - Questions → Answers (One-to-Many)
@@ -218,11 +230,13 @@ See `docs/DATABASE_SCHEMA.md` for full details.
 ## 🔗 API Endpoints
 
 ### Authentication
+
 - `POST /api/auth/register` - User registration
 - `POST /api/auth/login` - User login
 - `GET /api/auth/me` - Get current user
 
 ### Questions
+
 - `GET /api/questions` - List questions (with filters)
 - `POST /api/questions` - Create question
 - `GET /api/questions/:id` - Get question details
@@ -230,21 +244,25 @@ See `docs/DATABASE_SCHEMA.md` for full details.
 - `PUT /api/questions/:id/downvote` - Downvote question
 
 ### Answers
+
 - `POST /api/answers` - Submit answer
 - `PUT /api/answers/:id/verify` - Verify answer (Teacher only)
 - `PUT /api/answers/:id/upvote` - Upvote answer
 - `PUT /api/answers/:id/accept` - Accept answer
 
 ### Sessions
+
 - `GET /api/sessions` - List sessions
 - `POST /api/sessions` - Create session (Teacher only)
 - `POST /api/sessions/:id/join` - Join session
 
 ### Reports & Moderation
+
 - `POST /api/reports` - Report content/user
 - `GET /api/reports` - List reports (Admin/Teacher)
 
 ### AI Chatbot
+
 - `POST /api/chatbot` - Chat with EduBot
 
 See `docs/API_TESTING.md` for complete documentation.
@@ -313,6 +331,7 @@ mern-final-project-RockieRaheem/
 ## 🚀 Getting Started
 
 ### Prerequisites
+
 - Node.js v22+
 - MongoDB v7+
 - npm
@@ -351,6 +370,7 @@ See README.md for detailed setup instructions.
 ## 📈 Current Status
 
 ### Completed ✅
+
 - ✅ Full backend API with authentication
 - ✅ MongoDB database with 6 collections
 - ✅ React frontend with routing
@@ -363,10 +383,12 @@ See README.md for detailed setup instructions.
 - ✅ Professional project structure
 
 ### In Progress 🔄
+
 - 🔄 Full test suite implementation
 - 🔄 Production deployment
 
 ### Planned 📋
+
 - 📋 Mobile application (React Native)
 - 📋 Progressive Web App (PWA)
 - 📋 Video call integration (WebRTC)
@@ -379,6 +401,7 @@ See README.md for detailed setup instructions.
 ## 🎓 Learning Outcomes Demonstrated
 
 ### Technical Skills
+
 - ✅ **MongoDB**: Schema design, relationships, validation
 - ✅ **Express.js**: RESTful API, middleware, error handling
 - ✅ **React**: Components, hooks, Context API, routing
@@ -389,6 +412,7 @@ See README.md for detailed setup instructions.
 - ✅ **Security**: CORS, Helmet, rate limiting, input validation
 
 ### Software Engineering
+
 - ✅ **Project Planning**: Requirements gathering, feature planning
 - ✅ **Architecture Design**: Layered architecture, separation of concerns
 - ✅ **Database Design**: Normalization, relationships, indexing
@@ -399,6 +423,7 @@ See README.md for detailed setup instructions.
 - ✅ **Deployment**: Cloud hosting, environment configuration
 
 ### Best Practices
+
 - ✅ Code organization and modular design
 - ✅ Error handling and validation
 - ✅ Security measures and data protection
@@ -451,6 +476,7 @@ See README.md for detailed setup instructions.
 **Repository**: [GitHub](https://github.com/PLP-MERN-Stack-Development/mern-final-project-RockieRaheem)
 
 **Live URLs** (pending deployment):
+
 - Frontend: https://edulink-ug.vercel.app
 - Backend API: https://edulink-ug-api.onrender.com
 
@@ -476,7 +502,7 @@ This project is licensed under the MIT License - see [LICENSE](../LICENSE) file.
 
 **Built with ❤️ for Quality Education in Uganda (SDG 4)**
 
-*For God and My Country* 🇺🇬
+_For God and My Country_ 🇺🇬
 
 ---
 
