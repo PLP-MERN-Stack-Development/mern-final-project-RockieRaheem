@@ -62,7 +62,7 @@ export const createAnswer = async (req, res, next) => {
     // Handle file uploads if any
     if (req.files && req.files.length > 0) {
       req.body.attachments = req.files.map((file) => ({
-        filename: file.filename,
+        filename: file.originalname || file.filename,
         url: `/uploads/${file.filename}`,
       }));
     }

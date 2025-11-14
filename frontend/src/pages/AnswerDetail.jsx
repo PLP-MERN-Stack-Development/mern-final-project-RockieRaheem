@@ -90,19 +90,121 @@ export default function AnswerDetail() {
               </p>
               {/* Attachments if any */}
               {answer.attachments && answer.attachments.length > 0 && (
-                <div className="mt-4 space-y-2">
-                  {answer.attachments.map((file, idx) => (
-                    <div key={idx}>
-                      <a
-                        href={file.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-500 underline"
-                      >
-                        {file.filename || "Attachment"}
-                      </a>
-                    </div>
-                  ))}
+                <div className="mt-4 space-y-4">
+                  {answer.attachments.map((file, idx) => {
+                    const ext = (
+                      file.filename ||
+                      file.originalname ||
+                      "Attachment"
+                    )
+                      .split(".")
+                      .pop()
+                      .toLowerCase();
+                    // Use backend base URL for /uploads paths
+                    const backendBaseUrl = "http://localhost:5001";
+                    let url = file.url || "";
+                    if (url.startsWith("/uploads")) {
+                      url = `${backendBaseUrl}${url}`;
+                    }
+                    const filename =
+                      file.filename ||
+                      file.originalname ||
+                      url.split("/").pop() ||
+                      "Attachment";
+                    if (["mp4", "webm", "ogg"].includes(ext)) {
+                      return (
+                        <div key={idx}>
+                          <video
+                            controls
+                            width="100%"
+                            style={{ maxHeight: 400 }}
+                          >
+                            <source src={url} type={`video/${ext}`} />
+                            Your browser does not support the video tag.
+                          </video>
+                          <div className="text-xs mt-1">{filename}</div>
+                        </div>
+                      );
+                    } else if (["pdf"].includes(ext)) {
+                      return (
+                        <div key={idx}>
+                          <iframe
+                            src={url}
+                            width="100%"
+                            height="400"
+                            title={filename}
+                          />
+                          <div className="text-xs mt-1">{filename}</div>
+                        </div>
+                      );
+                    } else if (["doc", "docx"].includes(ext)) {
+                      return (
+                        <div key={idx}>
+                          <div className="text-blue-500 underline mb-2">
+                            {filename}
+                          </div>
+                          <iframe
+                            src={`https://docs.google.com/gview?url=${encodeURIComponent(
+                              url
+                            )}&embedded=true`}
+                            width="100%"
+                            height="400"
+                            title={filename}
+                            style={{ border: "none" }}
+                            onError={(e) => {
+                              e.target.style.display = "none";
+                              const msg = document.createElement("div");
+                              msg.className = "text-xs mt-1 text-red-500";
+                              msg.innerText =
+                                "Preview unavailable. Download to view.";
+                              e.target.parentNode.appendChild(msg);
+                            }}
+                          />
+                          <button
+                            className="mt-2 px-3 py-1 bg-blue-500 text-white rounded"
+                            onClick={() => {
+                              const a = document.createElement("a");
+                              a.href = url;
+                              a.download = filename;
+                              document.body.appendChild(a);
+                              a.click();
+                              document.body.removeChild(a);
+                            }}
+                          >
+                            Download DOC/DOCX
+                          </button>
+                          <div className="text-xs mt-1">
+                            (Previewed via Google Docs Viewer; may not work for
+                            local files)
+                          </div>
+                        </div>
+                      );
+                    } else {
+                      return (
+                        <div key={idx}>
+                          <div className="text-blue-500 underline mb-2">
+                            {filename}
+                          </div>
+                          <button
+                            className="mt-2 px-3 py-1 bg-blue-500 text-white rounded"
+                            onClick={() => {
+                              const a = document.createElement("a");
+                              a.href = url;
+                              a.download = filename;
+                              document.body.appendChild(a);
+                              a.click();
+                              document.body.removeChild(a);
+                            }}
+                          >
+                            Download
+                          </button>
+                          <div className="text-xs mt-1">
+                            (Download to view this file type)
+                          </div>
+                        </div>
+                      );
+                    }
+                  })}
                 </div>
               )}
               <div className="mt-4 flex items-center gap-4">
