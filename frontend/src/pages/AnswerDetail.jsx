@@ -92,14 +92,17 @@ export default function AnswerDetail() {
               {answer.attachments && answer.attachments.length > 0 && (
                 <div className="mt-4 space-y-4">
                   {answer.attachments.map((file, idx) => {
-                    const ext = (
-                      file.filename ||
-                      file.originalname ||
-                      "Attachment"
-                    )
-                      .split(".")
-                      .pop()
-                      .toLowerCase();
+                    // Try to get extension from filename, originalname, or url
+                    const getExt = (f) => {
+                      const sources = [f.filename, f.originalname, f.url];
+                      for (const src of sources) {
+                        if (src && src.includes(".")) {
+                          return src.split(".").pop().toLowerCase();
+                        }
+                      }
+                      return "";
+                    };
+                    const ext = getExt(file);
                     // Use backend base URL for /uploads paths
                     const backendBaseUrl = "http://localhost:5001";
                     let url = file.url || "";
@@ -179,11 +182,25 @@ export default function AnswerDetail() {
                           </div>
                         </div>
                       );
+                    } else if (["jpeg", "jpg", "png", "gif"].includes(ext)) {
+                      return (
+                        <div key={idx}>
+                          <img
+                            src={url}
+                            alt={filename}
+                            style={{ maxWidth: "100%", maxHeight: 400 }}
+                          />
+                          <div className="text-xs mt-1">{filename}</div>
+                        </div>
+                      );
                     } else {
                       return (
                         <div key={idx}>
                           <div className="text-blue-500 underline mb-2">
                             {filename}
+                          </div>
+                          <div className="text-xs mt-1 text-red-500">
+                            Preview not supported for this file type.
                           </div>
                           <button
                             className="mt-2 px-3 py-1 bg-blue-500 text-white rounded"
@@ -198,9 +215,6 @@ export default function AnswerDetail() {
                           >
                             Download
                           </button>
-                          <div className="text-xs mt-1">
-                            (Download to view this file type)
-                          </div>
                         </div>
                       );
                     }

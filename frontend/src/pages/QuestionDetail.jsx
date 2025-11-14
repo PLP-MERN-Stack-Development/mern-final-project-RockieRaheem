@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import api from "../api";
 
@@ -12,6 +13,7 @@ export default function QuestionDetail() {
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [attachments, setAttachments] = useState([]);
+  const fileInputRef = useRef();
 
   const fetchQuestionAndAnswers = useCallback(async () => {
     try {
@@ -95,6 +97,8 @@ export default function QuestionDetail() {
       setAnswers([newAnswer, ...answers]);
       setAnswerContent("");
       setAttachments([]);
+      // Reset file input
+      if (fileInputRef.current) fileInputRef.current.value = "";
     } catch {
       console.error("Failed to submit answer");
     } finally {
@@ -269,6 +273,7 @@ export default function QuestionDetail() {
                 type="file"
                 multiple
                 accept=".pdf,.doc,.docx,video/*"
+                ref={fileInputRef}
                 onChange={(e) => setAttachments(Array.from(e.target.files))}
                 className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-white hover:file:bg-primary/90"
               />

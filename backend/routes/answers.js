@@ -1,18 +1,10 @@
-import express from "express";
-import {
-  getAnswersForQuestion,
-  getAnswerById,
-  createAnswer,
-  voteAnswer,
-  acceptAnswer,
-  verifyAnswer,
-  deleteAnswer,
-} from "../controllers/answerController.js";
-import { protect, authorize } from "../middleware/auth.js";
-import { moderateContent, checkStrikes } from "../middleware/moderation.js";
-import upload from "../utils/fileUpload.js";
-
-const router = express.Router();
+import multer from "multer";
+// Debug route for file upload
+const debugUpload = multer({ dest: "uploads/" });
+router.post("/test-upload", debugUpload.any(), (req, res) => {
+  console.log("Test upload req.files:", req.files);
+  res.json({ files: req.files });
+});
 
 router.get("/question/:questionId", getAnswersForQuestion);
 router.get("/:id", getAnswerById);
@@ -21,7 +13,7 @@ router.post(
   protect,
   checkStrikes,
   moderateContent,
-  upload.array("attachments", 2),
+  upload.any(),
   createAnswer
 );
 router.put("/:id/vote", protect, voteAnswer);

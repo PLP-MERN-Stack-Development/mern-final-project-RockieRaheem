@@ -59,7 +59,8 @@ export const createAnswer = async (req, res, next) => {
     // Add author
     req.body.author = req.user.id;
 
-    // Handle file uploads if any
+    // Debug: log file upload info
+    console.log("req.files:", req.files);
     if (req.files && req.files.length > 0) {
       req.body.attachments = req.files.map((file) => ({
         filename: file.originalname || file.filename,
@@ -73,6 +74,9 @@ export const createAnswer = async (req, res, next) => {
       req.body.verifiedBy = req.user.id;
       req.body.verifiedAt = Date.now();
     }
+
+    // Debug: log final req.body
+    console.log("Answer create req.body:", req.body);
 
     const answer = await Answer.create(req.body);
 
@@ -95,6 +99,7 @@ export const createAnswer = async (req, res, next) => {
       data: answer,
     });
   } catch (error) {
+    console.error("Answer creation error:", error);
     next(error);
   }
 };
