@@ -2,80 +2,38 @@ import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
 import { useAuth } from "../hooks/useAuth";
+import apiExports from "../api";
 
 export default function LiveSession() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { user } = useAuth();
 
+  const { sessions: sessionsAPI } = apiExports;
+
   // State management
-  const [session] = useState({
-    title: "Physics A'Level: Projectile Motion",
-    host: "Mr. Atwine",
-    subject: "Physics",
-  });
-  const [participants, setParticipants] = useState([
-    {
-      id: 1,
-      name: "Mr. Atwine",
-      role: "host",
-      audio: true,
-      video: true,
-      avatar:
-        "https://lh3.googleusercontent.com/aida-public/AB6AXuBCi-NeB-ZxmQaEWWauPgew3CbgViTjS2ji87aAcPPSgveaDTLA1UKc42Jm0s5q0A5gpBug-4E9lHJgcmTazX3tq0UTTybg7AGcJys5JL9se_AGT-_DkoV8K7Wc5BwHdpBBb5wO1Ab2XGc-S3FrIQ8y6Np3msSGzwRjHJmM2v9OSjiFsbOyZbjMSrYsT1q10rpXNnxK8gKJvHbjntHEpPxQHvq5ed9OoKkwBY-VZrrJGlqpxrwTGtArTUQHxHJl6qzPaueV5Ps8NJw",
-    },
-    {
-      id: 2,
-      name: user?.name || "John Doe",
-      role: "you",
-      audio: true,
-      video: true,
-      avatar: user?.avatar || null,
-    },
-    {
-      id: 3,
-      name: "Grace Nakato",
-      role: "participant",
-      audio: true,
-      video: true,
-      isPinned: true,
-      avatar:
-        "https://lh3.googleusercontent.com/aida-public/AB6AXuD9q-7KVsdwlN3iKSogqEJsdzXM4kyzbsg7KhckxepxBBBo1M8bus3lR-6S3-DfHVLivn7z7RH285FHUg38HTJlCafofCTX4pySdzahdSIiLJXsyS5VjTPjXc88jJUAPl0T72J5LM-pTl3RF47RoeawnmDLFAENXoyIvo554bHBegUA22xcb6uZsitreMAf-02Xnyg0U1U1ML9d7EXHgQErMWl42WOCAT192xkn66f9XLyR63RHDYVhL0kxxibos31CGofS224e84I",
-    },
-    {
-      id: 4,
-      name: "David Okello",
-      role: "participant",
-      audio: false,
-      video: false,
-      avatar: null,
-    },
-    {
-      id: 5,
-      name: "Aisha Nanteza",
-      role: "participant",
-      audio: false,
-      video: false,
-      avatar:
-        "https://lh3.googleusercontent.com/aida-public/AB6AXuDnD90rBqnGn9vvTZsanI2s4W1jQGZX5Ag1NH2QuHsh-kLJDi_QGyohPHhCwRi0-EU__JbLHsWmK0u1JjKdqSeHLtnZfBdGUVRqJilyR5Hwzz0N_keQhEa0hm3dSFy7DlOW_VqRXl6s3YPgqtaoAceMXQOPz0f3ZJPCQwelbBMdAS4lVahrfoOeT50mI0yv2hKkxJDzWW4osg1HoCT4VLtJyhG9B-3C94k7u7WrvMiSFlnAwiBKqbb-cZf0yb0EsYjcBQSyhBtBCzk",
-    },
-    {
-      id: 6,
-      name: "Another Student",
-      role: "participant",
-      audio: false,
-      video: false,
-      avatar: null,
-    },
-    {
-      id: 7,
-      name: "Last Student",
-      role: "participant",
-      audio: false,
-      video: false,
-      avatar: null,
-    },
-  ]);
+  const [session, setSession] = useState(null);
+  const [participants, setParticipants] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Fetch session details and participants from backend
+  useEffect(() => {
+    const fetchSession = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const res = await sessionsAPI.getById(id);
+        setSession(res.data.data);
+        setParticipants(res.data.data.participants || []);
+      } catch (err) {
+        setError(err.message || "Failed to fetch session");
+      } finally {
+        setLoading(false);
+      }
+    };
+    if (id) fetchSession();
+  }, [id, sessionsAPI]);
   const [messages, setMessages] = useState([]);
   const [messageInput, setMessageInput] = useState("");
   const [isAudioEnabled, setIsAudioEnabled] = useState(true);
@@ -190,6 +148,28 @@ export default function LiveSession() {
       .toUpperCase()
       .slice(0, 2);
   };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen text-lg text-text-light-secondary dark:text-text-dark-secondary">
+        Loading session...
+      </div>
+    );
+  }
+  if (error) {
+    return (
+      <div className="flex items-center justify-center min-h-screen text-lg text-red-500">
+        {error}
+      </div>
+    );
+  }
+  if (!session) {
+    return (
+      <div className="flex items-center justify-center min-h-screen text-lg text-text-light-secondary dark:text-text-dark-secondary">
+        Session not found.
+      </div>
+    );
+  }
 
   return (
     <div className="relative flex min-h-screen w-full flex-col bg-background-light dark:bg-background-dark">

@@ -6,15 +6,40 @@ import { useAuth } from "../hooks/useAuth";
 const Dashboard = () => {
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedSubject, setSelectedSubject] = useState("All Subjects");
+  const [stats, setStats] = useState({
+    totalQuestions: 0,
+    totalAnswers: 0,
+    subjects: [],
+  });
   const { user, logout } = useAuth();
 
   useEffect(() => {
-    questionAPI
-      .getAll({ limit: 10 })
-      .then((res) => setQuestions(res.data.data))
-      .catch(() => console.error("Failed to load questions"))
+    setLoading(true);
+    setError(null);
+    Promise.all([
+      questionAPI.getAll({ limit: 10 }),
+      questionAPI.getAll({}), // fetch all for stats
+    ])
+      .then(([limitedRes, allRes]) => {
+        setQuestions(limitedRes.data.data);
+        const allQuestions = allRes.data.data;
+        setStats({
+          totalQuestions: allQuestions.length,
+          totalAnswers: allQuestions.reduce(
+            (acc, q) => acc + (q.answers?.length || 0),
+            0
+          ),
+          subjects: Array.from(
+            new Set(allQuestions.map((q) => q.subject))
+          ).filter(Boolean),
+        });
+      })
+      .catch((err) => {
+        setError(err.message || "Failed to load questions");
+      })
       .finally(() => setLoading(false));
   }, []);
 
@@ -26,6 +51,21 @@ const Dashboard = () => {
       selectedSubject === "All Subjects" || q.subject === selectedSubject;
     return matchesSearch && matchesSubject;
   });
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen text-lg text-text-light-secondary dark:text-text-dark-secondary">
+        Loading dashboard...
+      </div>
+    );
+  }
+  if (error) {
+    return (
+      <div className="flex items-center justify-center min-h-screen text-lg text-red-500">
+        {error}
+      </div>
+    );
+  }
 
   return (
     <div className="flex min-h-screen w-full bg-background-light dark:bg-background-dark">
@@ -149,6 +189,38 @@ const Dashboard = () => {
         <div className="p-6 lg:p-10">
           <div className="mx-auto max-w-4xl w-full">
             <div className="flex flex-col gap-8">
+              {/* Dashboard Statistics */}
+              <section className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-4">
+                <div className="bg-card-light dark:bg-card-dark rounded-xl p-6 border border-border-light dark:border-border-dark flex flex-col items-center justify-center">
+                  <span className="material-symbols-outlined text-4xl text-primary mb-2">
+                    forum
+                  </span>
+                  <h2 className="text-2xl font-bold">{stats.totalQuestions}</h2>
+                  <p className="text-sm text-text-light-secondary dark:text-text-dark-secondary">
+                    Total Questions
+                  </p>
+                </div>
+                <div className="bg-card-light dark:bg-card-dark rounded-xl p-6 border border-border-light dark:border-border-dark flex flex-col items-center justify-center">
+                  <span className="material-symbols-outlined text-4xl text-success mb-2">
+                    chat_bubble
+                  </span>
+                  <h2 className="text-2xl font-bold">{stats.totalAnswers}</h2>
+                  <p className="text-sm text-text-light-secondary dark:text-text-dark-secondary">
+                    Total Answers
+                  </p>
+                </div>
+                <div className="bg-card-light dark:bg-card-dark rounded-xl p-6 border border-border-light dark:border-border-dark flex flex-col items-center justify-center">
+                  <span className="material-symbols-outlined text-4xl text-info mb-2">
+                    category
+                  </span>
+                  <h2 className="text-2xl font-bold">
+                    {stats.subjects.length}
+                  </h2>
+                  <p className="text-sm text-text-light-secondary dark:text-text-dark-secondary">
+                    Subjects
+                  </p>
+                </div>
+              </section>
               {/* Header */}
               <header className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                 <div>
