@@ -19,6 +19,7 @@ export const questionAPI = {
 
 export const answerAPI = {
   getByQuestion: (questionId) => api.get(`/answers/question/${questionId}`),
+  getById: (id) => api.get(`/answers/${id}`),
   create: (data) => api.post("/answers", data),
   vote: (id, vote) => api.put(`/answers/${id}/vote`, { vote }),
   verify: (id) => api.put(`/answers/${id}/verify`),
@@ -61,6 +62,7 @@ export default {
   },
   answers: {
     getByQuestion: (questionId) => answerAPI.getByQuestion(questionId),
+    getById: (id) => answerAPI.getById(id),
     create: (data) => answerAPI.create(data),
     upvote: (id) => answerAPI.vote(id, 1),
     vote: (id, vote) => answerAPI.vote(id, vote),

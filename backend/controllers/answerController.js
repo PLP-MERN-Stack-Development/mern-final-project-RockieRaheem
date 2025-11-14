@@ -1,3 +1,21 @@
+// @desc    Get single answer by ID
+// @route   GET /api/answers/:id
+// @access  Public
+export const getAnswerById = async (req, res, next) => {
+  try {
+    const answer = await Answer.findById(req.params.id)
+      .populate("author", "name avatar role verified")
+      .populate("verifiedBy", "name role");
+    if (!answer) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Answer not found" });
+    }
+    res.status(200).json({ success: true, data: answer });
+  } catch (error) {
+    next(error);
+  }
+};
 import Answer from "../models/Answer.js";
 import Question from "../models/Question.js";
 import User from "../models/User.js";

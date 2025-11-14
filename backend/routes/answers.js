@@ -1,6 +1,7 @@
 import express from "express";
 import {
   getAnswersForQuestion,
+  getAnswerById,
   createAnswer,
   voteAnswer,
   acceptAnswer,
@@ -14,6 +15,7 @@ import upload from "../utils/fileUpload.js";
 const router = express.Router();
 
 router.get("/question/:questionId", getAnswersForQuestion);
+router.get("/:id", getAnswerById);
 router.post(
   "/",
   protect,

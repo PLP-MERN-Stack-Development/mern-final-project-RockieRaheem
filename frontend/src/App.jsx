@@ -12,6 +12,8 @@ import ResourceLibrary from "./pages/ResourceLibrary";
 import UserProfile from "./pages/UserProfile";
 import Chatbot from "./components/chat/Chatbot";
 
+import AnswerDetail from "./pages/AnswerDetail";
+
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useAuth();
 
@@ -62,6 +64,14 @@ function AppRoutes() {
           element={
             <PrivateRoute>
               <QuestionDetail />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/answers/:answerId"
+          element={
+            <PrivateRoute>
+              <AnswerDetail />
             </PrivateRoute>
           }
         />

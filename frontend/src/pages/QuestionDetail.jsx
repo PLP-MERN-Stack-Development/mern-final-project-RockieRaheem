@@ -277,7 +277,8 @@ export default function QuestionDetail() {
           {answers.map((answer) => (
             <div
               key={answer._id}
-              className="bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-sm border border-border-light dark:border-border-dark"
+              className="bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-sm border border-border-light dark:border-border-dark cursor-pointer hover:bg-surface-light dark:hover:bg-surface-dark"
+              onClick={() => navigate(`/answers/${answer._id}`)}
             >
               <div className="flex items-start gap-4">
                 <img
