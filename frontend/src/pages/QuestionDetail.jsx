@@ -11,6 +11,7 @@ export default function QuestionDetail() {
   const [answerContent, setAnswerContent] = useState("");
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
+  const [attachments, setAttachments] = useState([]);
 
   const fetchQuestionAndAnswers = useCallback(async () => {
     try {
@@ -75,21 +76,25 @@ export default function QuestionDetail() {
   const handleSubmitAnswer = async (e) => {
     e.preventDefault();
 
-    if (!answerContent.trim()) {
+    if (!answerContent.trim() && attachments.length === 0) {
       return;
     }
 
     try {
       setSubmitting(true);
-      // Backend expects 'question' and 'body'
-      const response = await api.answers.create({
-        question: id,
-        body: answerContent,
+      const formData = new FormData();
+      formData.append("question", id);
+      formData.append("body", answerContent);
+      attachments.forEach((file) => {
+        formData.append("attachments", file);
       });
-      // Defensive: handle backend response shape
+      const response = await api.answers.create(formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
       const newAnswer = response.data?.data || response.data;
       setAnswers([newAnswer, ...answers]);
       setAnswerContent("");
+      setAttachments([]);
     } catch {
       console.error("Failed to submit answer");
     } finally {
@@ -256,10 +261,25 @@ export default function QuestionDetail() {
               value={answerContent}
               onChange={(e) => setAnswerContent(e.target.value)}
             />
+            <div className="mt-4">
+              <label className="block text-sm font-medium mb-2">
+                Upload attachments (PDF, DOCX, video):
+              </label>
+              <input
+                type="file"
+                multiple
+                accept=".pdf,.doc,.docx,video/*"
+                onChange={(e) => setAttachments(Array.from(e.target.files))}
+                className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-white hover:file:bg-primary/90"
+              />
+            </div>
             <div className="mt-4 flex justify-end">
               <button
                 type="submit"
-                disabled={submitting || !answerContent.trim()}
+                disabled={
+                  submitting ||
+                  (!answerContent.trim() && attachments.length === 0)
+                }
                 className="flex items-center justify-center rounded-lg h-11 px-6 bg-primary text-white text-sm font-semibold leading-normal shadow-sm hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary/50 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {submitting ? "Posting..." : "Post Answer"}
